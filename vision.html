@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improved Object Detection with TensorFlow.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+</head>
+<body>
+    <h1>Improved Object Detection with TensorFlow.js</h1>
+    <button id="startCameraButton">Open Camera</button>
+    <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+    <button id="captureButton" style="display: none;">Capture Photo</button>
+    <canvas id="canvas"></canvas>
+    <div id="result"></div>
+
+    <script>
+        let model;
+        let videoStream;
+        const confidenceThreshold = 0.5; // Minimum confidence level to display detected objects
+
+        // Load the COCO-SSD model
+        async function loadModel() {
+            try {
+                model = await cocoSsd.load();
+                console.log("Model Loaded");
+            } catch (error) {
+                console.error("Error loading model:", error);
+                document.getElementById('result').innerHTML = "Error loading model.";
+            }
+        }
+
+        // Start the video stream from the camera and reset previous results
+        async function startVideoStream() {
+            resetDisplay(); // Clear previous results and images
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
+                video.srcObject = videoStream;
+                video.style.display = 'block';
+                document.getElementById('captureButton').style.display = 'block';
+                document.getElementById('startCameraButton').style.display = 'none';
+            } catch (error) {
+                console.error("Error accessing the camera:", error);
+                document.getElementById('result').innerHTML = "Error accessing the camera.";
+            }
+        }
+
+        // Capture a frame from the video and detect objects
+        async function captureAndDetectObjects() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw the current video frame to the canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // Run object detection on the canvas image
+            if (model) {
+                const predictions = await model.detect(canvas);
+                console.log(predictions);
+
+                // Display results in the result div
+                const resultDiv = document.getElementById('result');
+                const filteredPredictions = predictions.filter(prediction => prediction.score >= confidenceThreshold);
+                
+                if (filteredPredictions.length === 0) {
+                    resultDiv.innerHTML = "No objects detected above confidence threshold.";
+                } else {
+                    resultDiv.innerHTML = filteredPredictions.map(prediction => 
+                        `${prediction.class}: ${Math.round(prediction.score * 100)}%`
+                    ).join('<br>');
+                }
+
+                // Draw bounding boxes for detected objects above confidence threshold
+                filteredPredictions.forEach(prediction => {
+                    context.beginPath();
+                    context.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
+                    context.lineWidth = 2;
+                    context.strokeStyle = 'red';
+                    context.fillStyle = 'red';
+                    context.stroke();
+                    context.fillText(prediction.class, prediction.bbox[0], prediction.bbox[1] - 5);
+                });
+            } else {
+                console.error("Model is not loaded yet.");
+            }
+
+            // Stop the video stream after capturing
+            stopVideoStream();
+        }
+
+        // Stop the video stream and reset the interface
+        function stopVideoStream() {
+            const video = document.getElementById('video');
+            video.style.display = 'none';
+            document.getElementById('captureButton').style.display = 'none';
+            document.getElementById('startCameraButton').style.display = 'block';
+            
+            if (videoStream) {
+                const tracks = videoStream.getTracks();
+                tracks.forEach(track => track.stop()); // Stop each track in the stream
+                videoStream = null;
+            }
+        }
+
+        // Clear previous results and reset canvas
+        function resetDisplay() {
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+            document.getElementById('result').innerHTML = ""; // Clear results
+        }
+
+        // Event listeners
+        document.getElementById('startCameraButton').addEventListener('click', startVideoStream);
+        document.getElementById('captureButton').addEventListener('click', captureAndDetectObjects);
+
+        // Load the model when the page loads
+        loadModel();
+    </script>
+</body>
+</html>
