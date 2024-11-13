@@ -9,16 +9,27 @@
 </head>
 <body>
     <h1>Improved Object Detection with TensorFlow.js</h1>
+    
+    <!-- Buttons and controls -->
     <button id="startCameraButton">Open Camera</button>
+    <button id="switchCameraButton" style="display: none;">Switch Camera</button>
+    <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" style="display: none;">
+    
+    <!-- Video stream and capture button -->
     <video id="video" width="640" height="480" autoplay style="display: none;"></video>
     <button id="captureButton" style="display: none;">Capture Photo</button>
+    
+    <!-- Canvas to display captured frame and result div for object detection info -->
     <canvas id="canvas"></canvas>
     <div id="result"></div>
 
     <script>
         let model;
         let videoStream;
-        const confidenceThreshold = 0.5; // Minimum confidence level to display detected objects
+        let currentCamera = 'user'; // 'user' for front camera, 'environment' for back
+        const confidenceThreshold = 0.5;
+        const zoomSlider = document.getElementById('zoomSlider');
+        const switchCameraButton = document.getElementById('switchCameraButton');
 
         // Load the COCO-SSD model
         async function loadModel() {
@@ -31,39 +42,60 @@
             }
         }
 
-        // Start the video stream from the camera and reset previous results
+        // Start video stream with selected camera and enable controls
         async function startVideoStream() {
-            resetDisplay(); // Clear previous results and images
+            resetDisplay();
+            const constraints = {
+                video: {
+                    facingMode: currentCamera,
+                    zoom: zoomSlider.value
+                }
+            };
             try {
-                videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
                 const video = document.getElementById('video');
                 video.srcObject = videoStream;
                 video.style.display = 'block';
                 document.getElementById('captureButton').style.display = 'block';
                 document.getElementById('startCameraButton').style.display = 'none';
+                switchCameraButton.style.display = 'block';
+                zoomSlider.style.display = 'block';
             } catch (error) {
                 console.error("Error accessing the camera:", error);
                 document.getElementById('result').innerHTML = "Error accessing the camera.";
             }
         }
 
-        // Capture a frame from the video and detect objects
+        // Switch between front and back camera
+        switchCameraButton.addEventListener('click', async () => {
+            currentCamera = currentCamera === 'user' ? 'environment' : 'user';
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+            startVideoStream();
+        });
+
+        // Adjust zoom
+        zoomSlider.addEventListener('input', (event) => {
+            const track = videoStream.getVideoTracks()[0];
+            const capabilities = track.getCapabilities();
+            if (capabilities.zoom) {
+                track.applyConstraints({ advanced: [{ zoom: event.target.value }] });
+            }
+        });
+
+        // Capture frame and detect objects
         async function captureAndDetectObjects() {
             const video = document.getElementById('video');
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-
-            // Draw the current video frame to the canvas
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // Run object detection on the canvas image
             if (model) {
                 const predictions = await model.detect(canvas);
                 console.log(predictions);
-
-                // Display results in the result div
                 const resultDiv = document.getElementById('result');
                 const filteredPredictions = predictions.filter(prediction => prediction.score >= confidenceThreshold);
                 
@@ -75,7 +107,7 @@
                     ).join('<br>');
                 }
 
-                // Draw bounding boxes for detected objects above confidence threshold
+                // Draw bounding boxes
                 filteredPredictions.forEach(prediction => {
                     context.beginPath();
                     context.rect(prediction.bbox[0], prediction.bbox[1], prediction.bbox[2], prediction.bbox[3]);
@@ -88,38 +120,36 @@
             } else {
                 console.error("Model is not loaded yet.");
             }
-
-            // Stop the video stream after capturing
             stopVideoStream();
         }
 
-        // Stop the video stream and reset the interface
+        // Stop video stream and reset controls
         function stopVideoStream() {
             const video = document.getElementById('video');
             video.style.display = 'none';
             document.getElementById('captureButton').style.display = 'none';
             document.getElementById('startCameraButton').style.display = 'block';
+            switchCameraButton.style.display = 'none';
+            zoomSlider.style.display = 'none';
             
             if (videoStream) {
-                const tracks = videoStream.getTracks();
-                tracks.forEach(track => track.stop()); // Stop each track in the stream
+                videoStream.getTracks().forEach(track => track.stop());
                 videoStream = null;
             }
         }
 
-        // Clear previous results and reset canvas
         function resetDisplay() {
             const canvas = document.getElementById('canvas');
             const context = canvas.getContext('2d');
-            context.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
-            document.getElementById('result').innerHTML = ""; // Clear results
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('result').innerHTML = "";
         }
 
         // Event listeners
         document.getElementById('startCameraButton').addEventListener('click', startVideoStream);
         document.getElementById('captureButton').addEventListener('click', captureAndDetectObjects);
 
-        // Load the model when the page loads
+        // Load the model on page load
         loadModel();
     </script>
 </body>
