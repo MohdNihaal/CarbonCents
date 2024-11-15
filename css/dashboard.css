@@ -25,7 +25,7 @@
     src: url('../fonts/CabinetGrotesk-Light.otf');
 }
 @font-face {
-    font-family: cabinter-medium;
+    font-family: cabinet-medium;
     src: url('../fonts/CabinetGrotesk-Medium.otf');
 }
 @font-face {
@@ -43,7 +43,7 @@
     justify-content: space-between;
 }
 #hero .nav{
-    width: 30%;
+    width: 20%;
     padding: 50px;
     padding-top: 80px;
 }
@@ -84,4 +84,46 @@
     border: none;
     outline: none;
     color: #fff;
+}
+#hero .nav a:hover{
+    text-decoration: underline;
+}
+#hero .right{
+    background-color: #DCE4C9;
+    width: 100%;
+    margin: 30px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+#hero .right .left1{
+    width: 60%;
+}
+#hero .right .right1{
+    width: 40%;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: #FCFAEE;
+    height: 100%;
+}
+#hero .right .right1 .top1{
+    height: 70%;
+}
+#hero .right .right1 .bottom1{
+    height: 25%;
+    border-radius: 20px;
+    background-color: #DCE4C9;
+    margin: 0px 30px;
+}
+#hero .right .right1 .bottom1 h3{
+    color: #262A41;
+    padding: 20px;
+    font-family: cabinet-bold;
+    font-size: 40px;
+}
+#hero .right .right1 .bottom1 h5{
+    color: #262A41;
+    padding-left: 20px; 
+    font-family: cabinet-bold;
+    font-size: 50px;
 }
