@@ -23,6 +23,7 @@ const userPhoto = document.getElementById('user-photo');
 const userName = document.getElementById('user-name');
 const userEmail = document.getElementById('user-email');
 const userPoints = document.getElementById('user-points'); // Element for user points
+const userGreeting = document.getElementById('user-greeting'); // New element for user greeting
 
 // Function to animate counting up to the target points value
 function animatePoints(targetPoints) {
@@ -61,6 +62,11 @@ async function initializeUserData(user) {
     }
 }
 
+// Function to extract the first name from the full name
+function getFirstName(fullName) {
+    return fullName.split(' ')[0]; // Splits the full name and returns the first part (first name)
+}
+
 // Check for user login status and display profile information
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -68,8 +74,12 @@ onAuthStateChanged(auth, async (user) => {
 
         // User is logged in, display their profile information
         userPhoto.src = user.photoURL || 'default-avatar.png';
-        userName.textContent = user.displayName;
+        userName.textContent = user.displayName; // Full name
         userEmail.textContent = user.email;
+
+        // Update greeting with the first name only
+        const firstName = getFirstName(user.displayName); // Extract first name
+        userGreeting.textContent = `Let's make a difference together, ${firstName}!`;
 
         // Initialize user data if it's missing points or other data
         await initializeUserData(user);

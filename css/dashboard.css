@@ -85,7 +85,7 @@
     outline: none;
     color: #fff;
 }
-#hero .nav a:hover{
+#hero .nav a#logout-link:hover{
     text-decoration: underline;
 }
 #hero .right{
