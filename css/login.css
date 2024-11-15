@@ -1,0 +1,99 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+@font-face {
+    font-family: cabinet-black;
+    src: url('../fonts/CabinetGrotesk-Black.otf');
+}
+@font-face {
+    font-family: cabinet-bold;
+    src: url('../fonts/CabinetGrotesk-Bold.otf');
+}
+@font-face {
+    font-family: cabinet-extrabold;
+    src: url('../fonts/CabinetGrotesk-ExtraBold.otf');
+}
+@font-face {
+    font-family: cabinet-extralight;
+    src: url('../fonts/CabinetGrotesk-ExtraLight.otf');
+}
+@font-face {
+    font-family: cabinet-light;
+    src: url('../fonts/CabinetGrotesk-Light.otf');
+}
+@font-face {
+    font-family: cabinter-medium;
+    src: url('../fonts/CabinetGrotesk-Medium.otf');
+}
+@font-face {
+    font-family: cabinet-regular;
+    src: url('../fonts/CabinetGrotesk-Regular.otf');
+}
+@font-face {
+    font-family: cabinet-thin;
+    src: url('../fonts/CabinetGrotesk-Thin.otf');
+}
+section#bg{
+    background-image: url("../images/photo-1621468635836-494461c17b64.jpg" );
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 50%;
+    height: 100vh;
+}
+.box{
+    opacity: 100%;
+    position: absolute;
+    top: 160px;
+    left: 440px;
+    background: #fff;
+    border-radius: 30px;
+    display: flex;
+    height: 500px;
+    justify-content: space-between;
+}
+.box .right img{
+    border-radius: 30px;
+    width: 500px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.box .left{
+    padding: 30px;
+    width: 300px;
+}
+.box .left h3{
+    font-size: 60px;
+    font-family: cabinet-extrabold;
+    line-height: 48px;
+    margin-top: 40px;
+}
+button {
+    margin-top: 100px;
+    max-width: 320px;
+    display: flex;
+    padding: 0.5rem 1.4rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    gap: 0.75rem;
+    color: rgb(65, 63, 63);
+    background-color: #fff;
+    cursor: pointer;
+    transition: all .6s ease;
+  }
+  
+  .button svg {
+    height: 24px;
+  }
+  
+  button:hover {
+    transform: scale(1.02);
+  }
