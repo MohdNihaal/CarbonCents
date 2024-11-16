@@ -32,15 +32,16 @@ async function initializeUserData(user) {
     const userRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userRef);
 
-    // If user document doesn't exist, create it with initial points
+    // If user document doesn't exist, create it with initial points and wasteDeposited field
     if (!userDoc.exists()) {
         await setDoc(userRef, {
             name: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            points: 0  // Initialize points to 0
+            points: 0,  // Initialize points to 0
+            wasteDeposited: 0  // Initialize wasteDeposited to 0
         });
-        console.log("User data initialized with points.");
+        console.log("User data initialized with points and waste deposited.");
     }
 }
 
@@ -52,6 +53,7 @@ async function updatePoints(user, pointsToAdd) {
     });
     console.log(`${pointsToAdd} points added to user account.`);
 }
+
 // Function to handle Google sign-in
 googleLogin.addEventListener('click', function () {
 
@@ -60,11 +62,53 @@ googleLogin.addEventListener('click', function () {
             const user = result.user;
             console.log('User Info:', user);
             await initializeUserData(user);  // Initialize user data if new
-            window.location.href = "dashboard.html"
+            window.location.href = "dashboard.html";
         })
         .catch((error) => {
             googleLogin.disabled = false;
             console.error("Error signing in:", error.message);
             alert('Failed to sign in with Google');
+        });
+});
+
+// Example: After sign-in, redirect to dashboard with user data
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        console.log("User logged in:", user); // Debugging statement
+
+        // Initialize user data if it's missing
+        await initializeUserData(user);
+        
+        // You can fetch and display user data here (e.g., points, wasteDeposited)
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+        
+        if (userDoc.exists()) {
+            const points = userDoc.data().points || 0;  // Default to 0 if no points
+            const wasteDeposited = userDoc.data().wasteDeposited || 0;  // Default to 0 if no waste deposited
+
+            // Display points and waste deposited on the dashboard
+            document.getElementById('user-points').textContent = `Points: ${points}`;
+            document.getElementById('user-waste-count').textContent = `Waste Deposited: ${wasteDeposited}`;
+        } else {
+            console.warn("No user document found.");
+        }
+    } else {
+        console.log("User not authenticated. Redirecting to login.");
+        window.location.href = "login.html";  // Redirect to login if not authenticated
+    }
+});
+
+// Logout functionality
+const logoutLink = document.getElementById('logout-link');
+logoutLink.addEventListener('click', (event) => {
+    event.preventDefault();
+    signOut(auth)
+        .then(() => {
+            console.log("User logged out.");
+            window.location.href = "login.html";  // Redirect to login page
+        })
+        .catch((error) => {
+            console.error("Error logging out:", error);
         });
 });

@@ -23,23 +23,23 @@ const userPhoto = document.getElementById('user-photo');
 const userName = document.getElementById('user-name');
 const userEmail = document.getElementById('user-email');
 const userPoints = document.getElementById('user-points'); // Element for user points
+const userWasteDeposited = document.getElementById('user-waste-deposited'); // Element for waste deposited
 const userGreeting = document.getElementById('user-greeting'); // New element for user greeting
 
-// Function to animate counting up to the target points value
-function animatePoints(targetPoints) {
-    console.log("Animating points to:", targetPoints); // Debugging statement
-    let currentPoints = 0;
+// Function to animate counting up to the target value
+function animateValue(targetValue, element, type = 'points') {
+    let currentValue = 0;
     const interval = setInterval(() => {
-        if (currentPoints < targetPoints) {
-            currentPoints++;
-            userPoints.textContent = currentPoints; // Display only points, no "Points: "
+        if (currentValue < targetValue) {
+            currentValue++;
+            element.textContent = `${currentValue}`; // Display value (e.g., points or waste deposited)
         } else {
             clearInterval(interval); // Stop the animation when target is reached
         }
     }, 10); // Faster animation (decreased interval time)
 }
 
-// Initialize user data if points are missing
+// Initialize user data if points or wasteDeposited are missing
 async function initializeUserData(user) {
     const userRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(userRef);
@@ -50,14 +50,20 @@ async function initializeUserData(user) {
             name: user.displayName,
             email: user.email,
             photoURL: user.photoURL,
-            points: 0  // Initialize points to 0 if the user doesn't have any
+            points: 0,  // Initialize points to 0 if the user doesn't have any
+            wasteDeposited: 0  // Initialize wasteDeposited to 0 if not set
         });
-        console.log("User data initialized with points.");
+        console.log("User data initialized with points and waste deposited.");
     } else {
-        // If points exist but are undefined, set them to 0
-        if (userDoc.data().points === undefined) {
+        // If points or wasteDeposited are missing, set them to 0
+        const data = userDoc.data();
+        if (data.points === undefined) {
             await setDoc(userRef, { points: 0 }, { merge: true });
             console.log("Points initialized to 0.");
+        }
+        if (data.wasteDeposited === undefined) {
+            await setDoc(userRef, { wasteDeposited: 0 }, { merge: true });
+            console.log("Waste deposited initialized to 0.");
         }
     }
 }
@@ -84,22 +90,32 @@ onAuthStateChanged(auth, async (user) => {
         // Initialize user data if it's missing points or other data
         await initializeUserData(user);
 
-        // Fetch user points from Firestore
+        // Fetch user points and wasteDeposited from Firestore
         const userRef = doc(db, "users", user.uid);
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
             const points = userDoc.data().points || 0; // Default to 0 if no points
+            const wasteDeposited = userDoc.data().wasteDeposited || 0; // Default to 0 if no waste deposited
             console.log("User points:", points); // Debugging statement
-            
+            console.log("Waste Deposited:", wasteDeposited); // Debugging statement
+
             // If points are not 0, animate them, otherwise display without animation
             if (points > 0) {
-                animatePoints(points);
+                animateValue(points, userPoints, 'points');
             } else {
                 userPoints.textContent = points; // Just display points if 0
+            }
+
+            // If wasteDeposited is not 0, animate it, otherwise display without animation
+            if (wasteDeposited > 0) {
+                animateValue(wasteDeposited, userWasteDeposited, 'waste');
+            } else {
+                userWasteDeposited.textContent = wasteDeposited; // Just display waste deposited if 0
             }
         } else {
             console.warn("No user document found."); // Debugging statement
             userPoints.textContent = "0"; // Display 0 if user document is not found
+            userWasteDeposited.textContent = "0"; // Display 0 if waste is not found
         }
     } else {
         console.log("User not authenticated. Redirecting to login."); // Debugging statement
