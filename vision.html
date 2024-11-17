@@ -3,25 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Improved Object Detection with TensorFlow.js</title>
+    <title>CarbonCents | Waste</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
-    <script src="./js/vision.js" defer></script>
+    <script src="./js/vision.js"></script>
+    <script src="./js/navbar.js" defer type="module"></script>
+    <link rel="stylesheet" href="./css/waste.css">
+    <link rel="stylesheet" href="./css/vision.css">
 </head>
 <body>
-    <h1>Improved Object Detection with TensorFlow.js</h1>
-    
-    <!-- Buttons and controls -->
-    <button id="startCameraButton">Open Camera</button>
-    <button id="switchCameraButton" style="display: none;">Switch Camera</button> 
-    <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" style="display: none;">
-    
-    <!-- Video stream and capture button -->
-    <video id="video" width="640" height="480" autoplay style="display: none;"></video>
-    <button id="captureButton" style="display: none;">Capture Photo</button>
-    
-    <!-- Canvas to display captured frame and result div for object detection info -->
-    <canvas id="canvas"></canvas>
-    <div id="result"></div>
+    <section id="hero">
+        <div class="nav">
+            <div class="top">
+                <img id="user-photo" src="" alt="User photo">
+                <h3 id="user-name"></h3>
+                <p id="user-email"></p>
+            </div>
+            <div class="bottom">
+                <ul>
+                    <li><a href="./dashboard.html">Dashboard</a></li>
+                    <li><a href="./redeem.html">Redeem</a></li>
+                    <li><a href="./tutorials.html">Tutorials</a></li>
+                    <li style="font-family: cabinet-medium;text-decoration: underline;"><a href="./waste.html">Deposit <br>Waste</a></li>
+                </ul>
+            </div>
+            <a href="#" id="logout-link">Logout</a>
+        </div>
+        <div class="right">
+            <div class="left1">
+                <h3 class="main">Let's Clean Up the World</h3>
+                <!-- Buttons and controls -->
+                <button id="startCameraButton">Open Camera</button>
+                <div style="display: flex;">
+                    <button id="switchCameraButton" style="display: none;">Switch Camera</button>
+                    <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" style="display: none;">
+                </div>
+                
+                <!-- Video stream and capture button -->
+                <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+                <button id="captureButton" style="display: none;">Capture Photo</button>
+
+                <!-- Canvas to display captured frame and result div for object detection info -->
+                <div style="display: flex;margin-top: 20px;">
+                    <canvas id="canvas"></canvas>
+                    <div id="result"></div>
+                </div>
+
+                <!-- Next Button (Initially Hidden) -->
+                <button id="nextButton" style="display: none;"><a href="./waste2.html">Next ></a></button>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

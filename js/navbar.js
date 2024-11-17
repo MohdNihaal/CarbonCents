@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc ,setDoc , getDocs, collection} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -97,7 +97,7 @@ onAuthStateChanged(auth, async (user) => {
             const points = userDoc.data().points || 0; // Default to 0 if no points
             const wasteDeposited = userDoc.data().wasteDeposited || 0; // Default to 0 if no waste deposited
             console.log("User points:", points); // Debugging statement
-            console.log("Waste Deposited:", wasteDeposited); // Debugging statement
+            //console.log("Waste Deposited:", wasteDeposited); // Debugging statement
 
             // If points are not 0, animate them, otherwise display without animation
             if (points > 0) {
@@ -136,3 +136,38 @@ logoutLink.addEventListener('click', (event) => {
             console.error("Error logging out:", error);
         });
 });
+// Function to calculate total waste deposited by all users
+// Function to calculate total waste deposited by all users
+async function calculateTotalWaste() {
+    try {
+        // Fetch all user documents from the "users" collection
+        const querySnapshot = await getDocs(collection(db, "users"));
+
+        let totalWaste = 0;
+
+        // Sum up the wasteDeposited field for each user
+        querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            totalWaste += userData.wasteDeposited || 0; // Add only if wasteDeposited exists, default to 0
+        });
+
+        console.log("Total Waste Deposited:", totalWaste);
+
+        // Display the total waste with animation
+        const totalWasteElement = document.getElementById("total-waste");
+        if (totalWasteElement) {
+            // Call animateValue to animate the total waste value
+            animateValue(totalWaste, totalWasteElement, 'waste');
+        } else {
+            console.warn("Element with ID 'total-waste' not found.");
+        }
+    } catch (error) {
+        console.error("Error calculating total waste:", error);
+
+        const totalWasteElement = document.getElementById("total-waste");
+        if (totalWasteElement) {
+            totalWasteElement.textContent = "Error fetching total waste data.";
+        }
+    }
+}
+calculateTotalWaste()

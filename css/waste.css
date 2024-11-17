@@ -104,92 +104,45 @@
     width: 60   0px;
     margin-top: 20px;   
 }
-#hero .right .left1 .ik{
-    font-family: cabinet-medium;
-    font-size: 70px;
-}
 #hero .right .left1 p{
     margin-left: 9px;
     font-family: cabinet-regular;
     font-size: 24px;
     margin-top: -9px;
 }
-#hero .right .right1{
-    width: 40%;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    background-color: #FCFAEE;
-    height: 100%;
-}
-#hero .right .right1 .top1{
-    height: 65%;
-}
-#hero .right .right1 .top1 .count{
-    border: 3px solid #000;
-    margin: 40px;
-    border-radius: 18px;
-    width: 30%;
-    text-align: center;
-    padding: 30px;
-}
-#hero .right .right1 .top1 .count h3{
-    font-size: 40px;
-    font-family: cabinet-black;
-}
-#hero .right .right1 .top1 .count p{
-    font-size: 24px;
-    font-family: cabinet-regular;
-}
-#hero .right .right1 .bottom1{
-    height: 25%;
-    border-radius: 20px;
-    background-color: #DCE4C9;
-    margin: 0px 30px;
-}
-#hero .right .right1 .bottom1 h3{
-    color: #262A41;
-    padding: 20px;
-    font-family: cabinet-bold;
-    font-size: 40px;
-}
-#hero .right .right1 .bottom1 h5{
-    color: #262A41;
-    padding-left: 20px; 
-    font-family: cabinet-bold;
-    font-size: 50px;
-}
-#hero .right .right1 .bottom1 img.img{
-    position: absolute;
-    right: 100px;
-    bottom: 200px;  
-}
-.bazuka{
-    position: absolute;
-    width: 300px;
-    right: 30px;
-    top: 120px;
-    opacity: 80%;
-}
-h3.idk{
-    font-size: 50px;
-    font-family: cabinet-regular;
-    margin-top: 30px;
-}
-.waste{
-    background-color: #FCFAEE;
-    padding: 20px 40px;
-    border-radius: 20px;
-    margin-top: 30px;
-    border: 0;
-    cursor:pointer;
-}
-.waste a{
-    color: #000;
+#hero .right .left1 .main{
     font-family: cabinet-medium;
-    font-size: 20px;
+    font-size: 70px;
 }
-.bruh{
+#hero .right .left1 .sub{
+    font-family: cabinet-regular;
+    font-size: 40px;
+    margin-top: 40px;
+    text-decoration: underline;
+}
+#hero .right .left1 ul{
+    text-decoration: none;
+    margin-top: 30px;
+}
+#hero .right .left1 ul li{
+    margin-bottom: 30px;
+    font-size: 25px;
+    font-family: cabinet-medium;
+}
+.sheesh{
     position: absolute;
-    right: 700px;
-    width: 500px;
+    bottom: 100px;
+    width: 560px;
+    right: 26px;
+}
+.btn{
+    border-radius: 30px;
+    padding: 20px 40px;
+    border: 0;
+    background-color:#fff;
+}
+.btn a{
+    color: #000;
+    font-size: 30px;
+    font-family: cabinet-medium;
 }

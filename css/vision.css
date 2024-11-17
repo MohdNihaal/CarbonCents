@@ -1,0 +1,81 @@
+@font-face {
+    font-family: cabinet-black;
+    src: url('../fonts/CabinetGrotesk-Black.otf');
+}
+@font-face {
+    font-family: cabinet-bold;
+    src: url('../fonts/CabinetGrotesk-Bold.otf');
+}
+@font-face {
+    font-family: cabinet-extrabold;
+    src: url('../fonts/CabinetGrotesk-ExtraBold.otf');
+}
+@font-face {
+    font-family: cabinet-extralight;
+    src: url('../fonts/CabinetGrotesk-ExtraLight.otf');
+}
+@font-face {
+    font-family: cabinet-light;
+    src: url('../fonts/CabinetGrotesk-Light.otf');
+}
+@font-face {
+    font-family: cabinet-medium;
+    src: url('../fonts/CabinetGrotesk-Medium.otf');
+}
+@font-face {
+    font-family: cabinet-regular;
+    src: url('../fonts/CabinetGrotesk-Regular.otf');
+}
+@font-face {
+    font-family: cabinet-thin;
+    src: url('../fonts/CabinetGrotesk-Thin.otf');
+}
+#startCameraButton{
+    padding: 20px 30px;
+    border-radius: 20px;
+    outline: none;
+    border: 0px;
+    font-family: cabinet-medium;
+    font-size: 30px;
+    margin-top: 40px;   
+}
+#switchCameraButton{
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: 0px;
+    font-family: cabinet-medium;
+    font-size: 24px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+#captureButton{
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: 0px;
+    font-family: cabinet-medium;
+    font-size: 20px;
+    margin-top: 10px;
+}
+#result{
+    margin-left: 20px;
+}
+#button{
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: 0px;
+    font-family: cabinet-medium;
+    font-size: 20px;
+    margin-top: 10px;
+}
+#nextButton{
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    border: 0px;
+    font-family: cabinet-medium;
+    font-size: 24px;
+    margin-top: 10px;
+}

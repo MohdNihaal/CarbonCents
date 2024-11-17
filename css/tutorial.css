@@ -104,7 +104,7 @@
     width: 60   0px;
     margin-top: 20px;   
 }
-#hero .right .left1 .ik{
+#hero .right .left1 h3{
     font-family: cabinet-medium;
     font-size: 70px;
 }
@@ -122,23 +122,7 @@
     height: 100%;
 }
 #hero .right .right1 .top1{
-    height: 65%;
-}
-#hero .right .right1 .top1 .count{
-    border: 3px solid #000;
-    margin: 40px;
-    border-radius: 18px;
-    width: 30%;
-    text-align: center;
-    padding: 30px;
-}
-#hero .right .right1 .top1 .count h3{
-    font-size: 40px;
-    font-family: cabinet-black;
-}
-#hero .right .right1 .top1 .count p{
-    font-size: 24px;
-    font-family: cabinet-regular;
+    height: 70%;
 }
 #hero .right .right1 .bottom1{
     height: 25%;
@@ -162,34 +146,4 @@
     position: absolute;
     right: 100px;
     bottom: 200px;  
-}
-.bazuka{
-    position: absolute;
-    width: 300px;
-    right: 30px;
-    top: 120px;
-    opacity: 80%;
-}
-h3.idk{
-    font-size: 50px;
-    font-family: cabinet-regular;
-    margin-top: 30px;
-}
-.waste{
-    background-color: #FCFAEE;
-    padding: 20px 40px;
-    border-radius: 20px;
-    margin-top: 30px;
-    border: 0;
-    cursor:pointer;
-}
-.waste a{
-    color: #000;
-    font-family: cabinet-medium;
-    font-size: 20px;
-}
-.bruh{
-    position: absolute;
-    right: 700px;
-    width: 500px;
 }

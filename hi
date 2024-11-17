@@ -1,0 +1,16 @@
+const url11 = "https://blynk.cloud/external/api/get?token=S1gYsFi1cU7HriVuD1kEuKVFqL_FhgtA&V0";
+async function updateData11() {
+    try {
+        const response = await fetch(url11);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.text();
+        document.getElementById("data11").textContent = data;
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        document.getElementById("data11").textContent = "Error fetching data";
+    }
+}
+setInterval(updateData11, 100);
+updateData11();
