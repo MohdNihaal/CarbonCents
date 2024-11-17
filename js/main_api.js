@@ -27,21 +27,13 @@ function checkCount() {
         fetch('https://blynk.cloud/external/api/get?token=CSsP2GNfjZDFUWD9oPUVALABu4Vn3cgx&V1')
             .then(response => response.json())
             .then(data => {
-                console.log("Count Response Data:", data);
-
-                if (data && data.V1 !== undefined) {
-                    const currentCount = parseInt(data.V1, 10);
-                    console.log("Current Count:", currentCount);
-
-                    // Store the count value
-                    if (countValues.length < 10) {
-                        countValues.push(currentCount);
-                    }
-
-                    // Update DOM
-                    document.getElementById("count").innerText = `Count: ${currentCount}`;
+                if (data !== undefined) {
+                    console.log("Count Response Data:", data);
+                    const count = parseInt(data, 10);
+                    document.getElementById("count").innerHTML = `Count: ${count}`;
+                    countValues.push(count); // Store the count value
                 } else {
-                    console.log("Count value is undefined or not available in the response");
+                    console.error("Invalid count data received");
                 }
             })
             .catch(error => console.error("Error fetching count:", error));
@@ -87,12 +79,19 @@ function startMonitoring() {
             document.getElementById("count").innerText = `Largest Count: ${largestCount}`;
             console.log("All Count Values:", countValues);
             console.log("Largest Count:", largestCount);
+
+            // Calculate total points and show alert
+            const totalPoints = largestCount * 100;
+            alert(`Points Awarded: ${totalPoints}`);
         } else {
             document.getElementById("count").innerText = "No count data available";
+            alert("No count data to calculate points.");
         }
     }, 10000);
 }
 
+// Initial button state update and start monitoring
 updateButtonV2();
 updateButtonV5(1);
 startMonitoring();
+
