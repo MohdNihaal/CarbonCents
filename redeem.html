@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CarbonCents | Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js"></script>
     <script src="./js/navbar.js" defer type="module"></script>
+    <script src="./js/redeem.js" type="module"></script>
     <link rel="stylesheet" href="./css/redeem.css">
 </head>
 <body>
@@ -27,13 +31,31 @@
         </div>
         <div class="right">
             <div class="left1">
-                <h3>CarbonCents</h3>
-                <p id="user-greeting">Let's make a difference together, <span id="user-name-greeting"></span>!</p>
-                <img class="stats" src="./images/Stats.png" alt="">
+                <h3>Redeem you're deeds!</h3>
+                <ul>
+                    <li>
+                        
+                    </li>
+                </ul>
             </div>
             <div class="right1">
                 <div class="top1">
-                    <h3 id="user-waste-deposited"></h3>
+                    <div class="content">
+                        <div class="content">
+                            <h1>Leaderboard</h1>
+                            <div id="leaderboard">
+                                <ul id="leaderboard-rank">
+                                    <!-- Rank list will be populated dynamically -->
+                                </ul>
+                                <ul id="leaderboard-name">
+                                    <!-- Name list will be populated dynamically -->
+                                </ul>
+                                <ul id="leaderboard-points">
+                                    <!-- Points list will be populated dynamically -->
+                                </ul>
+                            </div>
+                        </div>                        
+                    </div>  
                 </div>
                 <div class="bottom1">
                     <img class="img" src="./images/Illustration.png" alt="">

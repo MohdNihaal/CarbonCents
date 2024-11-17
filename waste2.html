@@ -6,7 +6,7 @@
     <title>CarbonCents | Waste</title>
     <script src="./js/navbar.js" defer type="module"></script>
     <link rel="stylesheet" href="./css/waste.css">
-    <script src="./js/main_api.js"></script>
+    <script src="./js/main_api.js" defer></script>
 </head>
 <body>
     <section id="hero">
@@ -27,8 +27,16 @@
             <a href="#" id="logout-link">Logout</a>
         </div>
         <div class="right">
-            drop the waste nigga!
+            <h1>CarbonCents Monitoring</h1>
+            <div>
+                <h2>Current Count:</h2>
+                <p id="count"></p>
+            </div>
 
+            <div>
+                <h2>V4 Value:</h2>
+                <p id="v4Value"></p>
+            </div>
         </div>
     </section>
 </body>

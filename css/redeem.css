@@ -147,3 +147,22 @@
     right: 100px;
     bottom: 200px;  
 }
+h1{
+    font-family: cabinet-medium;
+    font-size: 70px;
+    margin-top: 30px;
+    margin-left: 10px;
+}
+#leaderboard{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+#leaderboard ul{
+
+}
+#leaderboard ul li{
+    font-size: 20px;
+    font-family: cabinet-medium;
+    margin-bottom: 7px;
+}

@@ -8,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
     <script src="./js/vision.js"></script>
     <script src="./js/navbar.js" defer type="module"></script>
-    <link rel="stylesheet" href="./css/waste.css">
     <link rel="stylesheet" href="./css/vision.css">
 </head>
 <body>
@@ -44,7 +43,7 @@
                 <button id="captureButton" style="display: none;">Capture Photo</button>
 
                 <!-- Canvas to display captured frame and result div for object detection info -->
-                <div style="display: flex;margin-top: 20px;">
+                <div style="margin-top: 20px;" id="bruh">
                     <canvas id="canvas"></canvas>
                     <div id="result"></div>
                 </div>
